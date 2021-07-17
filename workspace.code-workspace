@@ -1,0 +1,15 @@
+{
+	"folders": [
+		{
+			"name": "startbootstrap-clean-blog-master",
+			"path": "C:\\Users\\mayn\\Desktop\\startbootstrap-clean-blog-master"
+		},
+		{
+			"name": "gridsome-blog",
+			"path": "."
+		}
+	],
+	"settings": {
+		"liveServer.settings.multiRootWorkspaceName": "startbootstrap-clean-blog-master"
+	}
+}
