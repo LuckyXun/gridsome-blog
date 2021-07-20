@@ -1,14 +1,14 @@
 <!--
  * @Author: XunL
  * @Date: 2021-07-17 10:41:16
- * @LastEditTime: 2021-07-17 12:47:07
+ * @LastEditTime: 2021-07-21 02:26:46
  * @Description: file content
 -->
 <template>
   <div class="layout">
     <nav class="navbar navbar-expand-lg navbar-light" id="mainNav">
       <div class="container px-4 px-lg-5">
-        <a class="navbar-brand" href="index.html">Start Bootstrap</a>
+        <g-link class="navbar-brand" :to="'/'">Start Bootstrap</g-link>
         <button
           class="navbar-toggler"
           type="button"

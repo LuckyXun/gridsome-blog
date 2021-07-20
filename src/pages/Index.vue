@@ -1,12 +1,20 @@
+<!--
+ * @Author: XunL
+ * @Date: 2021-07-17 13:48:25
+ * @LastEditTime: 2021-07-21 02:41:46
+ * @Description: file content
+-->
 <template>
   <Layout>
-    <header class="masthead" style="background-image: url('/img/home-bg.jpg')">
+    <header class="masthead"  :style="{
+        backgroundImage: `url(http://localhost:1337${webInfo.cover.url})`,
+      }">
       <div class="container position-relative px-4 px-lg-5">
         <div class="row gx-4 gx-lg-5 justify-content-center">
           <div class="col-md-10 col-lg-8 col-xl-7">
             <div class="site-heading">
-              <h1>Clean Blog</h1>
-              <span class="subheading">A Blog Theme by Start Bootstrap</span>
+              <h1>{{webInfo.title}}</h1>
+              <span class="subheading">{{webInfo.subtitle}}</span>
             </div>
           </div>
         </div>
@@ -16,88 +24,102 @@
     <div class="container px-4 px-lg-5">
       <div class="row gx-4 gx-lg-5 justify-content-center">
         <div class="col-md-10 col-lg-8 col-xl-7">
-          <!-- Post preview-->
-          <div class="post-preview">
-            <a href="post.html">
+          <div class="post-preview" v-for="edge in $page.posts.edges" :key="edge.id">
+            <g-link :to="`/post/${edge.node.id}`">
               <h2 class="post-title">
-                Man must explore, and this is exploration at its greatest
+                {{ edge.node.title }}
               </h2>
-              <h3 class="post-subtitle">Problems look mighty small from 150 miles up</h3>
-            </a>
+              <!-- <h3 class="post-subtitle">Problems look mighty small from 150 miles up</h3> -->
+            </g-link>
             <p class="post-meta">
               Posted by
-              <a href="#!">Start Bootstrap</a>
-              on September 24, 2021
+              <a href="#!">
+                {{ edge.node.create_by.firstname + edge.node.create_by.lastname }}</a
+              >
+              {{ edge.node.created_at }}
             </p>
+            <p>
+              <span v-for="tag in edge.node.tags" :key="tag.id">
+                <g-link :to="'/tag/' + tag.id">{{ tag.name }}</g-link
+                >&nbsp;
+              </span>
+            </p>
+            <hr class="my-4" />
           </div>
-          <!-- Divider-->
-          <hr class="my-4" />
           <!-- Post preview-->
-          <div class="post-preview">
-            <a href="post.html"
-              ><h2 class="post-title">
-                I believe every human has a finite number of heartbeats. I don't intend to
-                waste any of mine.
-              </h2></a
-            >
-            <p class="post-meta">
-              Posted by
-              <a href="#!">Start Bootstrap</a>
-              on September 18, 2021
-            </p>
-          </div>
-          <!-- Divider-->
-          <hr class="my-4" />
-          <!-- Post preview-->
-          <div class="post-preview">
-            <a href="post.html">
-              <h2 class="post-title">Science has not yet mastered prophecy</h2>
-              <h3 class="post-subtitle">
-                We predict too much for the next year and yet far too little for the next
-                ten.
-              </h3>
-            </a>
-            <p class="post-meta">
-              Posted by
-              <a href="#!">Start Bootstrap</a>
-              on August 24, 2021
-            </p>
-          </div>
-          <!-- Divider-->
-          <hr class="my-4" />
-          <!-- Post preview-->
-          <div class="post-preview">
-            <a href="post.html">
-              <h2 class="post-title">Failure is not an option</h2>
-              <h3 class="post-subtitle">
-                Many say exploration is part of our destiny, but it’s actually our duty to
-                future generations.
-              </h3>
-            </a>
-            <p class="post-meta">
-              Posted by
-              <a href="#!">Start Bootstrap</a>
-              on July 8, 2021
-            </p>
-          </div>
-          <!-- Divider-->
-          <hr class="my-4" />
+
           <!-- Pager-->
           <div class="d-flex justify-content-end mb-4">
-            <a class="btn btn-primary text-uppercase" href="#!">Older Posts →</a>
+            <Pager :info="$page.posts.pageInfo" />
           </div>
         </div>
       </div>
     </div>
   </Layout>
 </template>
+<page-query>
+
+
+
+query($page:Int){
+  general:allStrapiGeneral{
+    	 edges{
+        node{
+          id
+          title
+          subtitle
+          cover{
+            url
+          }
+        }
+      }
+         
+    }
+  	posts:allStrapiPost(perPage:2,page:$page) @paginate{
+       pageInfo {
+      totalPages
+      currentPage
+    }
+      edges{
+        node{
+          id
+          content
+          cover{
+						url
+          }
+          created_at
+          title
+          create_by{
+            firstname
+            lastname
+          }
+          tags{
+        		id
+            name
+        	}
+        }
+      }
+    }
+}
+
+</page-query>
 
 <script>
+import { Pager } from "gridsome";
+
 export default {
   name: "index",
-  metaInfo: {
-    title: "Hello, world!",
+  components: {
+    Pager,
   },
+  metaInfo: {
+    title: "Hello, Xun!",
+  },
+  computed:{
+    webInfo(){
+      return this.$page.general.edges[0].node
+    }
+  }
 };
 </script>
 

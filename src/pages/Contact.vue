@@ -1,12 +1,12 @@
 <!--
  * @Author: XunL
  * @Date: 2021-07-17 12:44:51
- * @LastEditTime: 2021-07-17 12:45:33
+ * @LastEditTime: 2021-07-21 03:25:13
  * @Description: file content
 -->
 <template>
   <Layout>
-    <header class="masthead" style="background-image: url('assets/img/contact-bg.jpg')">
+    <header class="masthead">
       <div class="container position-relative px-4 px-lg-5">
         <div class="row gx-4 gx-lg-5 justify-content-center">
           <div class="col-md-10 col-lg-8 col-xl-7">
@@ -40,6 +40,7 @@
                   <input
                     class="form-control"
                     id="name"
+                    v-model="form.name"
                     type="text"
                     placeholder="Enter your name..."
                     data-sb-validations="required"
@@ -52,6 +53,7 @@
                 <div class="form-floating">
                   <input
                     class="form-control"
+                    v-model="form.email"
                     id="email"
                     type="email"
                     placeholder="Enter your email..."
@@ -70,6 +72,7 @@
                     class="form-control"
                     id="phone"
                     type="tel"
+                    v-model="form.phone"
                     placeholder="Enter your phone number..."
                     data-sb-validations="required"
                   />
@@ -81,6 +84,7 @@
                 <div class="form-floating">
                   <textarea
                     class="form-control"
+                    v-model="form.message"
                     id="message"
                     placeholder="Enter your message here..."
                     style="height: 12rem"
@@ -115,9 +119,10 @@
                 </div>
                 <!-- Submit Button-->
                 <button
-                  class="btn btn-primary text-uppercase disabled"
+                  class="btn btn-primary text-uppercase"
                   id="submitButton"
                   type="submit"
+                  @click.prevent="submit"
                 >
                   Send
                 </button>
@@ -131,7 +136,40 @@
 </template>
 
 <script>
-export default {};
+import axios from "axios";
+
+export default {
+  name: "contact",
+  data: () => {
+    return {
+      form: {
+        name: "",
+        email: "",
+        phone: "",
+        message: "",
+      },
+    };
+  },
+
+  methods: {
+    async submit() {
+      try {
+        const res = await axios.post("http://localhost:1337/contacts", this.form);
+        if (res) {
+          alert("提交成功");
+          this.form = {
+            name: "",
+            email: "",
+            phone: "",
+            message: "",
+          };
+        }
+      } catch (e) {
+        alert(e);
+      }
+    },
+  },
+};
 </script>
 
 <style></style>
