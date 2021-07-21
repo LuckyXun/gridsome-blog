@@ -1,6 +1,6 @@
 {
     "rewrites": [{
         "source": "/uploads/:match*",
-        "destination": process.env.GRIDSOME_API_URL
+        "destination": "http://117.50.92.194:1331"
     }]
 }
