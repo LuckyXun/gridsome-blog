@@ -1,7 +1,7 @@
 <!--
  * @Author: XunL
  * @Date: 2021-07-17 12:44:51
- * @LastEditTime: 2021-07-21 03:25:13
+ * @LastEditTime: 2021-07-21 10:41:31
  * @Description: file content
 -->
 <template>
@@ -154,7 +154,7 @@ export default {
   methods: {
     async submit() {
       try {
-        const res = await axios.post("http://localhost:1337/contacts", this.form);
+        const res = await axios.post(this.GRIDSOME_API_URL + "/contacts", this.form);
         if (res) {
           alert("提交成功");
           this.form = {
