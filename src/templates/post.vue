@@ -1,7 +1,7 @@
 <!--
  * @Author: XunL
  * @Date: 2021-07-17 12:48:19
- * @LastEditTime: 2021-07-21 10:50:08
+ * @LastEditTime: 2021-07-21 17:05:09
  * @Description: file content
 -->
 <template>
@@ -9,7 +9,7 @@
     <header
       class="masthead"
       :style="{
-        backgroundImage: `url(${GRIDSOME_API_URL + $page.strapiPost.cover.url})`,
+        backgroundImage: `url(${$page.strapiPost.cover.url})`,
       }"
     >
       <div class="container position-relative px-4 px-lg-5">

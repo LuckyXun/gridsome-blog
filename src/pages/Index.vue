@@ -1,13 +1,13 @@
 <!--
  * @Author: XunL
  * @Date: 2021-07-17 13:48:25
- * @LastEditTime: 2021-07-21 10:41:13
+ * @LastEditTime: 2021-07-21 17:05:01
  * @Description: file content
 -->
 <template>
   <Layout>
     <header class="masthead"  :style="{
-        backgroundImage: `url(${GRIDSOME_API_URL+webInfo.cover.url})`,
+        backgroundImage: `url(${webInfo.cover.url})`,
       }">
       <div class="container position-relative px-4 px-lg-5">
         <div class="row gx-4 gx-lg-5 justify-content-center">
